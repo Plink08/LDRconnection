@@ -20,8 +20,29 @@
         <small id="statusTime"></small>
       </section>
 
-      <section class="card">
-        <h2>Planning deze week</h2>
+      <section class="card card-wide">
+        <div class="card-header">
+          <h2>Agenda overzicht (Google Calendar)</h2>
+          <small>Toont alleen bezet/vrij blokken, geen event-details.</small>
+        </div>
+
+        <div class="settings-grid">
+          <label>
+            Google API key
+            <input id="apiKeyInput" type="text" placeholder="AIza..." autocomplete="off" />
+          </label>
+          <label>
+            Calendar ID
+            <input id="calendarIdInput" type="text" placeholder="jouw-id@group.calendar.google.com" autocomplete="off" />
+          </label>
+        </div>
+
+        <div class="button-row">
+          <button id="saveSettingsBtn" type="button">Opslaan</button>
+          <button id="loadAgendaBtn" type="button" class="secondary">Agenda laden</button>
+        </div>
+
+        <p id="agendaMeta" class="meta-text">Nog niet gekoppeld. Je ziet nu voorbeelddata.</p>
         <ul id="scheduleList" class="schedule-list"></ul>
       </section>
 
