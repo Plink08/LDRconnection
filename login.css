@@ -1,10 +1,10 @@
 body{
 font-family:sans-serif;
 display:flex;
-justify-content:center;
-align-items:center;
 height:100vh;
 background:#fff0f6;
+justify-content:center;
+align-items:center;
 }
 
 .login-container{
@@ -69,4 +69,60 @@ transform:scale(0.96);
 outline:none;
 border-color:#ff4f97;
 box-shadow:0 0 8px rgba(255,79,151,0.4);
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333333;
+}
+
+ul li {
+  float: left;
+}
+
+ul li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+ul li a:hover {
+  background-color: #111111;
+
+}ul li a.active {
+  background-color: #04AA6D;
+}
+
+.logout-btn {
+  margin-top: 2rem;
+  margin-left: 2rem;
+  padding: 10px 20px;
+  background-color: #ff66aa; /* cute roze */
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(233, 86, 160, 0.2);
+  transition: all 0.2s ease;
+}
+
+.logout-btn:hover {
+  background-color: #ff4d99;
+  transform: translateY(-2px);
+}
+
+h1 {
+  margin: 0.8rem 0 0.5rem;
+  font-size: clamp(2rem, 5vw, 2.8rem);
+}
+
+.hero {
+  text-align: center;
+  padding: 0rem 1rem 2rem;
 }
