@@ -1,5 +1,41 @@
 # RenitasPalace
 
+Een simpele basiswebsite die je direct kunt openen voor je vriendin.
+
+## Wat zit erin?
+
+- Home hero met titel en korte intro
+- "Nu bezig met" statusblok
+- "Planning deze week" met voorbeeldafspraken
+- Countdown naar volgende date
+
+## Bestanden
+
+- `index.html` – structuur van de pagina
+- `styles.css` – styling (zachte roze stijl, mobielvriendelijk)
+- `script.js` – voorbeelddata + rendering + countdown
+
+## Lokaal draaien
+
+Optie 1: dubbelklik op `index.html`.
+
+Optie 2 (aanrader): start een lokale server:
+
+```bash
+python3 -m http.server 8000
+```
+
+Open dan: `http://localhost:8000`
+
+## Volgende stap
+
+Als je wilt, kan ik hierna versie 2 maken met:
+
+- echte login
+- database (Supabase)
+- events toevoegen via een mini-admin pagina
+# RenitasPalace
+
 Starterplan voor een persoonlijke website voor je vriendin, met focus op jouw planning, updates en leuke extra's.
 
 ## 1) Stack (snel en simpel)
@@ -158,4 +194,3 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=...
 
 Als je wilt, kan de volgende stap zijn dat we hier direct de echte Next.js basisbestanden in deze repo scaffolden.
 
->>>>>>> c6c14adcd084f9f17955d8e3e76b95f2de08301b
