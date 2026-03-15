@@ -19,7 +19,7 @@ margin:20px 0;
 }
 
 .code-inputs input{
-width:40px;
+width:5%;
 height:50px;
 font-size:24px;
 text-align:center;
@@ -99,8 +99,8 @@ ul li a:hover {
 }
 
 .logout-btn {
-  margin-top: 2rem;
-  margin-left: 2rem;
+  margin-top: 3%;
+  margin-left: 3%;
   padding: 10px 20px;
   background-color: #ff66aa; /* cute roze */
   color: white;
