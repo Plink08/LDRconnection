@@ -1,5 +1,5 @@
 const inputs = document.querySelectorAll(".code-inputs input");
-const secretCode = "pookie"; // Je eigen admin code
+const secretCodeHash = "cG9va2ll"; 
 
 inputs.forEach((input, index) => {
   input.addEventListener("input", () => {
@@ -18,12 +18,17 @@ function checkCode(){
   let code = "";
   inputs.forEach(input => { code += input.value; });
 
-  if(code === secretCode){
-    // Zet flag in localStorage
-    localStorage.setItem("isAdmin", "true");
+  // Versleut de input dezelfde manier als de hash
+  const codeHash = btoa(code); 
+
+  if(codeHash === secretCodeHash){
+    localStorage.setItem("isAdmin","true"); // login flag
     window.location.href = "admin-dashboard.html";
   } else {
     document.getElementById("error").textContent = "Wrong code 💔";
   }
 }
 
+function homer(){
+    window.location.href = "index.html";
+}
