@@ -57,9 +57,27 @@ function loginAdmin() {
   const password = document.getElementById("passwordInput").value;
 
   firebase.auth().signInWithEmailAndPassword(email, password)
-    .then(() => {
-      localStorage.setItem("isAdmin", "true"); // flag voor dashboard guard
-      window.location.href = "admin-dashboard.html";
+    .then((userCredential) => {
+      const user = userCredential.user;
+
+      // Email key aanpassen voor database (punt vervangen door komma)
+      const emailKey = user.email.replace(/\./g, ',');
+
+      // Check rol in database
+      db.ref('users/' + emailKey + '/role').once('value').then(snapshot => {
+        const role = snapshot.val();
+
+        if (role === 'admin') {
+          // Admin gevonden → login succesvol
+          localStorage.setItem("isAdmin", "true");
+          window.location.href = "admin-dashboard.html";
+        } else {
+          // Niet admin → uitloggen en alert
+          firebase.auth().signOut();
+          alert("You are not authorized to access the admin dashboard.");
+          window.location.href = "home.html";
+        }
+      });
     })
     .catch((error) => {
       document.getElementById("loginError").textContent = error.message;

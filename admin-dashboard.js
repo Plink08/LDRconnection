@@ -15,6 +15,28 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
+// Admin dashboard guard
+firebase.auth().onAuthStateChanged(user => {
+  if(!user){
+    // Niet ingelogd → terug naar login
+    window.location.href = "admin-login.html";
+    return;
+  }
+
+  // Email key aanpassen voor database (punt vervangen door komma)
+  const emailKey = user.email.replace(/\./g, ',');
+
+  // Check role in database
+  db.ref('users/' + emailKey + '/role').once('value').then(snapshot => {
+    const role = snapshot.val();
+    if(role !== 'admin'){
+      // Geen admin → terug naar home
+      alert("You are not authorized for the admin dashboard!");
+      window.location.href = "home.html";
+    }
+  });
+});
+
 // Status
 const statusInput = document.getElementById("statusInput");
 const statusPreview = document.getElementById("statusPreview");

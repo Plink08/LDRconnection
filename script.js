@@ -119,7 +119,7 @@ setInterval(updateCountdown, 60*1000);
 // Personalized message by time
 //=================
 const hour = new Date().getHours();
-const loveMsg = document.getElementById("loveMessage");
+const loveMsg = document.getElementById("loveMessageTime");
 if(hour < 12){
   loveMsg.textContent = "Good morning Renita ☀️ I hope your day will be awesome.";
 } else if(hour < 18){
