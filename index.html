@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="nl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Renita's Palace</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="hero">
+      <p class="label">Voor jou ❤️</p>
+      <h1>Renita's Palace</h1>
+      <p class="subtitle">Een klein plekje waar je mijn planning en updates kunt zien.</p>
+    </header>
+
+    <main class="container">
+      <section class="card">
+        <h2>Nu bezig met</h2>
+        <p id="statusText">Even opstarten...</p>
+        <small id="statusTime"></small>
+      </section>
+
+      <section class="card card-wide">
+        <h2>Agenda overzicht (Google Calendar embed)</h2>
+        <p class="meta-text">Directe embed, zonder eigen API-logica.</p>
+        <div class="calendar-embed-wrap">
+          <iframe
+            src="https://calendar.google.com/calendar/embed?height=600&wkst=2&ctz=Europe%2FAmsterdam&mode=AGENDA&title=Schedule%20&showNav=0&showPrint=0&showTabs=0&src=YzFlNGM2ZmE3OTM5NTFjY2YzZGU5NzY5MDNiNmE0ZWIyZWVmNTFiOTliY2ZjYWM1NWQ2OTUyOWIyYjcyNjdmZUBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=ZmFtaWx5MDUyNDI4NzMyMDcwOTU2OTUzOTZAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&src=NGI0NGMxNWNhZGRlYzRjYzI1ZjYzOTc0NTExZGFmMDMwODdiYzQ5ZjgyZTc5NTQ2MGE1ZjMwNDJmNDg5MzA1Y0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=M2UxODIzZDViMzk0NzM3MWFhZjM1NjBmM2MyNjA0MjYxYjUzMGNhM2FkMmE1MjE5NjMzN2JiNTc2ZmY1NmQ2OEBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&color=%23ff00ea&color=%237cb342&color=%23f6bf26&color=%237986cb"
+            style="border-width: 0"
+            width="700"
+            height="600"
+            frameborder="0"
+            scrolling="no"
+            title="Google Calendar agenda"
+          ></iframe>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Volgende date countdown</h2>
+        <p id="countdownText">Countdown laden...</p>
+      </section>
+    </main>
+
+    <footer>
+      <p>Gemaakt met liefde ✨</p>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
