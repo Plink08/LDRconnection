@@ -157,3 +157,5 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=...
 ---
 
 Als je wilt, kan de volgende stap zijn dat we hier direct de echte Next.js basisbestanden in deze repo scaffolden.
+
+>>>>>>> c6c14adcd084f9f17955d8e3e76b95f2de08301b
