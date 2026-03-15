@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Dashboard</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<nav>
+    <ul>
+        <li><a href="home.html">Home</a></li>
+        <li onclick="logout()""><a>Logout</a></li>
+    </ul>
+</nav>
+
+<header class="hero">
+    <p id="loveMessage"></p>
+    <h1>Admin Dashboard</h1>
+    <p class="subtitle">A small place for us two, managed by YOU</p>
+</header>
+
+
+<div class="container">
+
+<section class="card">
+<h3>Currently Status</h3>
+<input id="statusInput" placeholder="What are you doing">
+<p>Preview: <span id="statusPreview"></span></p>
+<button onclick="saveStatus()">Save Status</button>
+</section>
+
+<section class="card">
+<h3>Next Date Countdown</h3>
+<input type="date" id="dateInput">
+<p>Preview: <span id="datePreview"></span></p>
+<button onclick="saveDate()">Save Countdown</button>
+</section>
+
+<section class="card">
+<h3>Love Messages</h3>
+<textarea id="loveInput" placeholder="One message per line"></textarea>
+<p>Preview:</p>
+<ul id="lovePreview"></ul>
+<button onclick="saveLove()">Save Messages</button>
+</section>
+
+<section class="card">
+<h3>Photo Gallery</h3>
+<input id="photoInput" placeholder="Image URLs, comma separated">
+<p>Preview:</p>
+<div id="photoPreview" class="photo-gallery"></div>
+<button onclick="savePhotos()">Save Photos</button>
+</section>
+
+</div>
+
+<script src="admin-dashboard.js"></script>
+</body>
+</html>
