@@ -1,3 +1,42 @@
+//=============
+// Firebase
+//=============
+const firebaseConfig = {
+  apiKey: "AIzaSyAMAYAoLAexGfhaNBcYQMfT0IgVDnJrzbY",
+  authDomain: "ldrconnection.firebaseapp.com",
+  databaseURL: "https://ldrconnection-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "ldrconnection",
+  storageBucket: "ldrconnection.firebasestorage.app",
+  messagingSenderId: "760366146881",
+  appId: "1:760366146881:web:750ef1af34dc8b2a5c2dc0",
+  measurementId: "G-86C5Q8WBJK"
+};
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
+
+// Admin dashboard guard
+firebase.auth().onAuthStateChanged(user => {
+  if(!user){
+    // Niet ingelogd → terug naar login
+    window.location.href = "admin-login.html";
+    return;
+  }
+
+  // Email key aanpassen voor database (punt vervangen door komma)
+  const emailKey = user.email.replace(/\./g, ',');
+
+  // Check role in database
+  db.ref('users/' + emailKey + '/role').once('value').then(snapshot => {
+    const role = snapshot.val();
+    if(role !== 'admin'){
+      // Geen admin → terug naar home
+      alert("You are not authorized for the admin dashboard!");
+      window.location.href = "home.html";
+    }
+  });
+});
+
 // Status
 const statusInput = document.getElementById("statusInput");
 const statusPreview = document.getElementById("statusPreview");
@@ -7,9 +46,10 @@ statusInput.addEventListener("input", () => {
 });
 
 function saveStatus(){
-  localStorage.setItem("statusText", statusInput.value);
-  localStorage.setItem("statusTime", "Updated just now");
-  alert("Status saved!");
+  const text = statusInput.value;
+  const updatedAt = new Date().toISOString();
+  db.ref('status').set({ text, updatedAt });
+  alert("Status saved to Firebase!");
 }
 
 // Countdown
@@ -21,8 +61,9 @@ dateInput.addEventListener("input", () => {
 });
 
 function saveDate(){
-  localStorage.setItem("nextDate", dateInput.value);
-  alert("Countdown saved!");
+  const nextDate = dateInput.value;
+  db.ref('nextDate').set(nextDate);
+  alert("Countdown saved to Firebase!");
 }
 
 // Love messages
@@ -43,8 +84,12 @@ loveInput.addEventListener("input", () => {
 
 function saveLove(){
   const messages = loveInput.value.split("\n").filter(m => m.trim() !== "");
-  localStorage.setItem("loveMessages", JSON.stringify(messages));
-  alert("Love messages saved!");
+  const updates = {};
+  messages.forEach((msg, index) => {
+    updates[`msg${index+1}`] = msg;
+  });
+  db.ref('loveMessages').set(updates);
+  alert("Love messages saved to Firebase!");
 }
 
 // Photo gallery
@@ -66,21 +111,27 @@ photoInput.addEventListener("input", () => {
 
 function savePhotos(){
   const urls = photoInput.value.split(",").map(u => u.trim());
-  localStorage.setItem("photoGallery", JSON.stringify(urls));
-  alert("Photos saved!");
+  const updates = {};
+  urls.forEach((url, i) => { updates[`photo${i+1}`] = url; });
+  db.ref('photos').set(updates);
+  alert("Photos saved to Firebase!");
 }
 
-// home-guard.js
+// home-guard
 if(localStorage.getItem("isAdmin") !== "true"){
-  // Als iemand niet ingelogd is, stuur naar login
-  window.location.href = "admin-login.html"; // of admin-login.html
+  window.location.href = "admin-login.html";
 }
 
+// Logout
 function logout() {
-  // verwijder flags
   localStorage.removeItem("isLoggedIn");
   localStorage.removeItem("isAdmin");
-
-  // terugsturen naar loginpagina
-  window.location.href = "admin-login.html"; // of admin-login.html als admin
+  window.location.href = "admin-login.html";
 }
+
+firebase.auth().onAuthStateChanged(user => {
+  if(!user){
+    // niet ingelogd → terug naar login
+    window.location.href = "admin-login.html";
+  }
+});

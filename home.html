@@ -1,17 +1,21 @@
 <!doctype html>
-<html lang="nl">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Renita's Palace</title>
     <link rel="stylesheet" href="styles.css" />
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+    <link rel="apple-touch-icon" href="favicon.png">
+    <link rel="icon" type="image/png" href="favicon.png" />
   </head>
   <body>
 
     <button class="logout-btn" onclick="logout()">Logout</button>
 
     <header class="hero">
-      <p id="loveMessage"></p>
+      <p id="loveMessageTime"></p>
       <h1>Renita's Palace</h1>
       <h2 id="siteTitle">❤️</h2>
       <p class="subtitle">A small place for us two</p>
@@ -23,6 +27,13 @@
         <p id="statusText">loading...</p>
         <small id="statusTime"></small>
       </section>
+
+      <section class="card">
+        <h2>Random message</h2>
+        <p id="loveMessage"></p>
+        <small id="statusTime"></small>
+      </section>
+
 
       <section class="card">
         <h2>Your Time</h2>

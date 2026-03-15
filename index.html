@@ -1,30 +1,30 @@
 <!doctype html>
-<html lang="nl">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Renita's Palace</title>
 <link rel="stylesheet" href="login.css">
+<!-- Firebase App (core SDK) -->
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+
+<!-- Firebase Auth -->
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+
+<!-- Firebase Realtime Database -->
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
+<link rel="apple-touch-icon" href="favicon.png">
+<link rel="icon" type="image/png" href="favicon.png" />
 </head>
 
 <body>
 
 <div class="login-container">
-<h1>Renita's Palace</h1>
-<p>Fill in da secret code</p>
-
-<div class="code-inputs">
-<input type="password" maxlength="1">
-<input type="password" maxlength="1">
-<input type="password" maxlength="1">
-<input type="password" maxlength="1">
-<input type="password" maxlength="1">
-<input type="password" maxlength="1">
-</div>
-
-<button onclick="checkCode()">Enter</button>
-
-<p id="error"></p>
+  <h1>Login to Renita's Palace</h1>
+  <input type="email" id="emailInput" placeholder="Email" required>
+  <input type="password" id="passwordInput" placeholder="Password" required>
+  <button onclick="loginHome()">Login</button>
+  <p id="loginError" style="color:red;"></p>
 </div>
 
 <script src="login.js"></script>
