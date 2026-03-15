@@ -97,7 +97,7 @@ function updateTime(){
   if(herTimeEl){
     herTimeEl.textContent = "It is " + new Intl.DateTimeFormat([], options).format(new Date()) + " for you";
   }
-  const options2 = { timeZone: "Europe/London", hour: "2-digit", minute: "2-digit" };
+  const options2 = { timeZone: "Europe/Amsterdam", hour: "2-digit", minute: "2-digit" };
   const myTimeEl = document.getElementById("myTime");
   if(myTimeEl){
     myTimeEl.textContent = "It is " + new Intl.DateTimeFormat([], options2).format(new Date()) + " for me"
