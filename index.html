@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="nl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Renita's Palace</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="hero">
+      <p class="label">Voor jou ❤️</p>
+      <h1>Renita's Palace</h1>
+      <p class="subtitle">Een klein plekje waar je mijn planning en updates kunt zien.</p>
+    </header>
+
+    <main class="container">
+      <section class="card">
+        <h2>Nu bezig met</h2>
+        <p id="statusText">Even opstarten...</p>
+        <small id="statusTime"></small>
+      </section>
+
+      <section class="card card-wide">
+        <div class="card-header">
+          <h2>Agenda overzicht (Google Calendar)</h2>
+          <small>Toont alleen bezet/vrij blokken, geen event-details.</small>
+        </div>
+
+        <div class="settings-grid">
+          <label>
+            Google API key
+            <input id="apiKeyInput" type="text" placeholder="AIza..." autocomplete="off" />
+          </label>
+          <label>
+            Calendar ID
+            <input id="calendarIdInput" type="text" placeholder="jouw-id@group.calendar.google.com" autocomplete="off" />
+          </label>
+        </div>
+
+        <div class="button-row">
+          <button id="saveSettingsBtn" type="button">Opslaan</button>
+          <button id="loadAgendaBtn" type="button" class="secondary">Agenda laden</button>
+        </div>
+
+        <p id="agendaMeta" class="meta-text">Nog niet gekoppeld. Je ziet nu voorbeelddata.</p>
+        <ul id="scheduleList" class="schedule-list"></ul>
+      </section>
+
+      <section class="card">
+        <h2>Volgende date countdown</h2>
+        <p id="countdownText">Countdown laden...</p>
+      </section>
+    </main>
+
+    <footer>
+      <p>Gemaakt met liefde ✨</p>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
