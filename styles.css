@@ -1,6 +1,5 @@
 :root {
   color-scheme: light;
-  --bg: #fff7fb;
   --card: #ffffff;
   --text: #2f1a2a;
   --muted: #7e5d73;
@@ -71,81 +70,23 @@ h1 {
   font-size: 1.1rem;
 }
 
-.card-header small {
-  color: var(--muted);
-}
-
-.settings-grid {
-  display: grid;
-  gap: 0.7rem;
-  margin-top: 0.9rem;
-  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-}
-
-label {
-  display: grid;
-  gap: 0.35rem;
-  font-size: 0.9rem;
-  color: var(--muted);
-}
-
-input {
-  border: 1px solid var(--border);
-  border-radius: 0.6rem;
-  padding: 0.55rem 0.65rem;
-  font: inherit;
-}
-
-.button-row {
-  display: flex;
-  gap: 0.65rem;
-  margin-top: 0.85rem;
-  flex-wrap: wrap;
-}
-
-button {
-  border: 0;
-  border-radius: 0.65rem;
-  background: var(--accent);
-  color: #fff;
-  padding: 0.55rem 0.85rem;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-button.secondary {
-  background: #b44a83;
-}
-
 .meta-text {
   margin: 0.85rem 0;
   color: var(--muted);
   font-size: 0.9rem;
 }
 
-.schedule-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: grid;
-  gap: 0.6rem;
-}
-
-.schedule-list li {
+.calendar-embed-wrap {
   border: 1px solid var(--border);
-  border-radius: 0.7rem;
-  padding: 0.6rem;
+  border-radius: 0.8rem;
+  overflow: hidden;
   background: #fff9fd;
 }
 
-.event-title {
-  font-weight: 600;
-}
-
-.event-time {
-  color: var(--muted);
-  font-size: 0.9rem;
-  margin-top: 0.2rem;
+.calendar-embed-wrap iframe {
+  width: 100%;
+  min-height: 600px;
+  display: block;
 }
 
 footer {
