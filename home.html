@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="nl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Renita's Palace</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+
+    <button class="logout-btn" onclick="logout()">Logout</button>
+
+    <header class="hero">
+      <p id="loveMessage"></p>
+      <h1>Renita's Palace</h1>
+      <h2 id="siteTitle">❤️</h2>
+      <p class="subtitle">A small place for us two</p>
+    </header>
+
+    <main class="container">
+      <section class="card">
+        <h2>Currently...</h2>
+        <p id="statusText">loading...</p>
+        <small id="statusTime"></small>
+      </section>
+
+      <section class="card">
+        <h2>Your Time</h2>
+        <p id="herTime"></p>
+        <h2>And Mine</h2>
+        <p id="myTime"></p>
+      </section>
+
+      <section class="card card-wide">
+        <h2>Agenda overzicht</h2>
+        <div class="calendar-embed-wrap">
+          <iframe
+            src="https://calendar.google.com/calendar/embed?height=600&wkst=2&ctz=Europe%2FAmsterdam&mode=AGENDA&title=Schedule%20&showNav=0&showPrint=0&showTabs=0&src=YzFlNGM2ZmE3OTM5NTFjY2YzZGU5NzY5MDNiNmE0ZWIyZWVmNTFiOTliY2ZjYWM1NWQ2OTUyOWIyYjcyNjdmZUBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=ZmFtaWx5MDUyNDI4NzMyMDcwOTU2OTUzOTZAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&src=NGI0NGMxNWNhZGRlYzRjYzI1ZjYzOTc0NTExZGFmMDMwODdiYzQ5ZjgyZTc5NTQ2MGE1ZjMwNDJmNDg5MzA1Y0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=M2UxODIzZDViMzk0NzM3MWFhZjM1NjBmM2MyNjA0MjYxYjUzMGNhM2FkMmE1MjE5NjMzN2JiNTc2ZmY1NmQ2OEBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&color=%23ff00ea&color=%237cb342&color=%23f6bf26&color=%237986cb&hl=en"
+            style="border-width: 0"
+            width="700"
+            height="600"
+            frameborder="0"
+            scrolling="no"
+            title="Google Calendar agenda"
+          ></iframe>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Volgende date countdown</h2>
+        <p id="countdownText">Countdown laden...</p>
+      </section>
+
+      <section class="card">
+        <h2>Love Counter</h2>
+        <p id="relationshipTime"></p>
+      </section>
+    </main>
+
+    <footer>
+      <p>Made with lots of love✨</p>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
