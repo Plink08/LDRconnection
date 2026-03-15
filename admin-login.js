@@ -32,21 +32,6 @@ inputs.forEach((input, index) => {
   });
 });
 
-// function checkCode(){
-//   let code = "";
-//   inputs.forEach(input => { code += input.value; });
-
-//   // Versleut de input dezelfde manier als de hash
-//   const codeHash = btoa(code); 
-
-//   if(codeHash === secretCodeHash){
-//     localStorage.setItem("isAdmin","true"); // login flag
-//     window.location.href = "admin-dashboard.html";
-//   } else {
-//     document.getElementById("error").textContent = "Wrong code 💔";
-//   }
-//}
-
 function homer(){
     window.location.href = "index.html";
 }
