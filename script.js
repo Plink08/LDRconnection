@@ -183,3 +183,66 @@ window.addEventListener("load", () => {
     setTimeout(() => loader.remove(), 400);
   }
 });
+
+
+const truths = [
+"What's your favourite memory with me?",
+"When did you first realize you liked me?",
+"What's something you love about me?",
+"What do you miss most about me right now?",
+"What's a place you want to travel with me?",
+"What's something cute I do that you love?"
+];
+
+const dares = [
+"Send me a cute selfie right now 📸",
+"Send a voice message saying you love me",
+"Blow me a kiss on camera",
+"Send a random heart emoji spam ❤️❤️❤️",
+"Tell me one thing you want to do together next time we meet",
+"Say something cheesy about us"
+];
+
+
+
+function sendTruth(){
+
+const rand = Math.floor(Math.random()*truths.length);
+
+db.ref("game/current").set({
+type: "truth",
+text: truths[rand],
+time: Date.now()
+});
+
+}
+
+function sendDare(){
+
+const rand = Math.floor(Math.random()*dares.length);
+
+db.ref("game/current").set({
+type: "dare",
+text: dares[rand],
+time: Date.now()
+});
+
+}
+
+db.ref("game/current").on("value", snapshot => {
+
+const data = snapshot.val();
+
+if(!data) return;
+
+const el = document.getElementById("todResult");
+
+if(data.type === "truth"){
+el.textContent = "Truth: " + data.text;
+}
+
+if(data.type === "dare"){
+el.textContent = "Dare: " + data.text;
+}
+
+});
