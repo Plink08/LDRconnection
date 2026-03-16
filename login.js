@@ -11,39 +11,81 @@ const firebaseConfig = {
   appId: "1:760366146881:web:750ef1af34dc8b2a5c2dc0",
   measurementId: "G-86C5Q8WBJK"
 };
-// Initialize Firebase
+
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
-function loginHome() {
+function getInviteCoupleId() {
+  const params = new URLSearchParams(window.location.search);
+  return params.get("couple");
+}
+
+async function resolveCoupleIdForUser(emailKey) {
+  const inviteId = getInviteCoupleId();
+  if (inviteId) {
+    localStorage.setItem("coupleId", inviteId);
+    return inviteId;
+  }
+
+  const localCoupleId = localStorage.getItem("coupleId");
+  if (localCoupleId) {
+    return localCoupleId;
+  }
+
+  const userCoupleSnap = await db.ref("users/" + emailKey + "/coupleId").once("value");
+  const userCoupleId = userCoupleSnap.val();
+  if (userCoupleId) {
+    localStorage.setItem("coupleId", userCoupleId);
+    return userCoupleId;
+  }
+
+  const newCoupleRef = db.ref("couples").push();
+  const newCoupleId = newCoupleRef.key;
+
+  await newCoupleRef.child("meta").set({
+    createdAt: new Date().toISOString(),
+    createdBy: emailKey
+  });
+
+  localStorage.setItem("coupleId", newCoupleId);
+  return newCoupleId;
+}
+
+async function loginHome() {
   const email = document.getElementById("emailInput").value;
   const password = document.getElementById("passwordInput").value;
   const errorEl = document.getElementById("loginError");
 
-  firebase.auth().signInWithEmailAndPassword(email, password)
-    .then((userCredential) => {
-      const user = userCredential.user;
-      const emailKey = user.email.replace(/\./g, ',');
+  try {
+    const userCredential = await firebase.auth().signInWithEmailAndPassword(email, password);
+    const user = userCredential.user;
+    const emailKey = user.email.replace(/\./g, ",");
 
-      // Check role in database
-      db.ref('users/' + emailKey + '/role').once('value').then(snapshot => {
-        const role = snapshot.val();
+    const roleSnapshot = await db.ref("users/" + emailKey + "/role").once("value");
+    const role = roleSnapshot.val();
 
-        if(role === 'home' || role === 'admin'){
-          // Login succesvol
-          localStorage.setItem("isLoggedIn", "true");
-          localStorage.setItem("role", role);
-          window.location.href = "home.html";
-        } else {
-          // Geen toestemming
-          firebase.auth().signOut();
-          errorEl.textContent = "You are not authorized to access the home page 💔";
-        }
-      });
-    })
-    .catch((error) => {
-      errorEl.textContent = error.message;
+    if (role !== "home" && role !== "admin") {
+      await firebase.auth().signOut();
+      errorEl.textContent = "You are not authorized to access the home page 💔";
+      return;
+    }
+
+    const coupleId = await resolveCoupleIdForUser(emailKey);
+
+    await db.ref("users/" + emailKey).update({
+      coupleId,
+      role,
+      lastLoginAt: new Date().toISOString()
     });
+
+    localStorage.setItem("isLoggedIn", "true");
+    localStorage.setItem("role", role);
+    localStorage.setItem("coupleId", coupleId);
+
+    window.location.href = "home.html";
+  } catch (error) {
+    errorEl.textContent = error.message;
+  }
 }
 
 if ("serviceWorker" in navigator) {

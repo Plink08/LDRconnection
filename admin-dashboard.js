@@ -11,65 +11,130 @@ const firebaseConfig = {
   appId: "1:760366146881:web:750ef1af34dc8b2a5c2dc0",
   measurementId: "G-86C5Q8WBJK"
 };
-// Initialize Firebase
+
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
-// Admin dashboard guard
-firebase.auth().onAuthStateChanged(user => {
+function getCoupleId() {
+  const params = new URLSearchParams(window.location.search);
+  const inviteId = params.get("couple");
+  if (inviteId) {
+    localStorage.setItem("coupleId", inviteId);
+  }
+
+  return localStorage.getItem("coupleId");
+}
+
+let coupleId = getCoupleId();
+
+function couplePath(path) {
+  return `couples/${coupleId}/${path}`;
+}
+
+async function ensureCoupleId(user) {
+  if (coupleId) return coupleId;
+
+  const emailKey = user.email.replace(/\./g, ",");
+  const userCoupleSnap = await db.ref("users/" + emailKey + "/coupleId").once("value");
+  const userCoupleId = userCoupleSnap.val();
+
+  if (userCoupleId) {
+    coupleId = userCoupleId;
+    localStorage.setItem("coupleId", userCoupleId);
+    return userCoupleId;
+  }
+
+  const newCoupleRef = db.ref("couples").push();
+  coupleId = newCoupleRef.key;
+
+  await newCoupleRef.child("meta").set({
+    createdAt: new Date().toISOString(),
+    createdBy: emailKey
+  });
+
+  await db.ref("users/" + emailKey).update({
+    coupleId,
+    lastLoginAt: new Date().toISOString()
+  });
+
+  localStorage.setItem("coupleId", coupleId);
+  return coupleId;
+}
+
+function renderCoupleInfo() {
+  const coupleIdEl = document.getElementById("coupleIdValue");
+  const inviteEl = document.getElementById("inviteLink");
+
+  if (!coupleIdEl || !inviteEl) return;
+
+  coupleIdEl.textContent = coupleId || "Not set";
+  inviteEl.value = coupleId
+    ? `${window.location.origin}${window.location.pathname.replace("admin-dashboard.html", "index.html")}?couple=${coupleId}`
+    : "";
+}
+
+function copyInviteLink() {
+  const inviteEl = document.getElementById("inviteLink");
+  if (!inviteEl || !inviteEl.value) return;
+
+  navigator.clipboard.writeText(inviteEl.value)
+    .then(() => alert("Invite link copied!"))
+    .catch(() => alert("Could not copy invite link automatically."));
+}
+
+window.copyInviteLink = copyInviteLink;
+
+firebase.auth().onAuthStateChanged(async user => {
   if(!user){
-    // Niet ingelogd → terug naar login
     window.location.href = "admin-login.html";
     return;
   }
 
-  // Email key aanpassen voor database (punt vervangen door komma)
   const emailKey = user.email.replace(/\./g, ',');
 
-  // Check role in database
-  db.ref('users/' + emailKey + '/role').once('value').then(snapshot => {
-    const role = snapshot.val();
-    if(role !== 'admin'){
-      // Geen admin → terug naar home
-      alert("You are not authorized for the admin dashboard!");
-      window.location.href = "home.html";
-    }
-  });
+  const roleSnapshot = await db.ref('users/' + emailKey + '/role').once('value');
+  const role = roleSnapshot.val();
+  if(role !== 'admin'){
+    alert("You are not authorized for the admin dashboard!");
+    window.location.href = "home.html";
+    return;
+  }
+
+  await ensureCoupleId(user);
+  renderCoupleInfo();
 });
 
-// Status
 const statusInput = document.getElementById("statusInput");
 const statusPreview = document.getElementById("statusPreview");
-
 statusInput.addEventListener("input", () => {
   statusPreview.textContent = statusInput.value;
 });
 
 function saveStatus(){
+  if (!coupleId) return;
+
   const text = statusInput.value;
   const updatedAt = new Date().toISOString();
-  db.ref('status').set({ text, updatedAt });
-  alert("Status saved to Firebase!");
+  db.ref(couplePath('status')).set({ text, updatedAt });
+  alert("Status saved to this couple home!");
 }
 
-// Countdown
 const dateInput = document.getElementById("dateInput");
 const datePreview = document.getElementById("datePreview");
-
 dateInput.addEventListener("input", () => {
   datePreview.textContent = dateInput.value;
 });
 
 function saveDate(){
+  if (!coupleId) return;
+
   const nextDate = dateInput.value;
-  db.ref('nextDate').set(nextDate);
-  alert("Countdown saved to Firebase!");
+  db.ref(couplePath('nextDate')).set(nextDate);
+  alert("Countdown saved to this couple home!");
 }
 
-// Love messages
 const loveInput = document.getElementById("loveInput");
 const lovePreview = document.getElementById("lovePreview");
-
 loveInput.addEventListener("input", () => {
   lovePreview.innerHTML = "";
   const lines = loveInput.value.split("\n");
@@ -83,19 +148,19 @@ loveInput.addEventListener("input", () => {
 });
 
 function saveLove(){
+  if (!coupleId) return;
+
   const messages = loveInput.value.split("\n").filter(m => m.trim() !== "");
   const updates = {};
   messages.forEach((msg, index) => {
     updates[`msg${index+1}`] = msg;
   });
-  db.ref('loveMessages').set(updates);
-  alert("Love messages saved to Firebase!");
+  db.ref(couplePath('loveMessages')).set(updates);
+  alert("Love messages saved to this couple home!");
 }
 
-// Photo gallery
 const photoInput = document.getElementById("photoInput");
 const photoPreview = document.getElementById("photoPreview");
-
 photoInput.addEventListener("input", () => {
   photoPreview.innerHTML = "";
   const urls = photoInput.value.split(",");
@@ -110,31 +175,31 @@ photoInput.addEventListener("input", () => {
 });
 
 function savePhotos(){
-  const urls = photoInput.value.split(",").map(u => u.trim());
+  if (!coupleId) return;
+
+  const urls = photoInput.value.split(",").map(u => u.trim()).filter(Boolean);
   const updates = {};
   urls.forEach((url, i) => { updates[`photo${i+1}`] = url; });
-  db.ref('photos').set(updates);
-  alert("Photos saved to Firebase!");
+  db.ref(couplePath('photos')).set(updates);
+  alert("Photos saved to this couple home!");
 }
 
-// home-guard
+window.saveStatus = saveStatus;
+window.saveDate = saveDate;
+window.saveLove = saveLove;
+window.savePhotos = savePhotos;
+
 if(localStorage.getItem("isAdmin") !== "true"){
   window.location.href = "admin-login.html";
 }
 
-// Logout
 function logout() {
   localStorage.removeItem("isLoggedIn");
   localStorage.removeItem("isAdmin");
   window.location.href = "admin-login.html";
 }
 
-firebase.auth().onAuthStateChanged(user => {
-  if(!user){
-    // niet ingelogd → terug naar login
-    window.location.href = "admin-login.html";
-  }
-});
+window.logout = logout;
 
 if ("serviceWorker" in navigator) {
   navigator.serviceWorker.register("/service-worker.js")
