@@ -13,6 +13,11 @@
   </head>
   <body>
 
+    <div id="loader">
+     <div class="heart"></div>
+     <p>Loading our little palace...</p>
+    </div>
+
     <button class="logout-btn" onclick="logout()">Logout</button>
 
     <header class="hero">
@@ -67,7 +72,53 @@
         <h2>Love Counter</h2>
         <p id="relationshipTime"></p>
       </section>
+
+      <section class="card card-wide">
+        <h2>Our Story</h2>
+
+        <div class="timeline">
+
+        <div class="moment">
+          <span>17 Feb 2025</span>
+          <p>Wonderchat meetingggg</p>
+        </div>
+
+        <div class="moment">
+          <span>06 Mar 2025</span>
+          <p>We started dating ❤️</p>
+        </div>
+
+        <div class="moment">
+          <span>First Call</span>
+          <p>Our first late night call together</p>
+        </div>
+
+        <div class="moment">
+          <span>Anniversary 06 Mar 2026</span>
+          <p>"Already a year :O"</p>
+        </div>
+
+        </div>
+
+      </section>
+
+      <section class="card card-wide">
+
+        <h2>Truth or Dare 💗</h2>
+
+        <p>Let's play a little game together</p>
+
+        <div class="tod-buttons">
+          <button class="btn" onclick="sendTruth()">Truth</button>
+          <button class="btn" onclick="sendDare()">Dare</button>
+        </div>
+
+        <div id="todResult">Press a button to start ✨</div>
+
+      </section>
+
     </main>
+
 
     <footer>
       <p>Made with lots of love✨</p>
