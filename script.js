@@ -165,7 +165,11 @@ let clickCount = 0;
 title.addEventListener("click", () => {
   clickCount++;
   if(clickCount >= 5){
-    window.location.href = "admin-login.html";
+    if(localStorage.getItem("isAdmin") === "true"){
+      window.location.href = "admin-dashboard.html";  
+    } else {
+      window.location.href = "admin-login.html";
+    }
   }
 });
 
