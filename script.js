@@ -43,6 +43,16 @@ db.ref('status').on('value', snapshot => {
   }
 });
 
+db.ref('status2').on('value', snapshot => {
+  const data = snapshot.val();
+  if(data){
+    const statusTextEl = document.getElementById("statusText2");
+    const statusTimeEl = document.getElementById("statusTime2");
+    statusTextEl.textContent = data.text;
+    statusTimeEl.textContent = `Last updated: ${new Date(data.updatedAt).toLocaleString()}`;
+  }
+});
+
 //=================
 // Countdown realtime
 //=================
@@ -64,6 +74,18 @@ db.ref('loveMessages').on('value', snapshot => {
     const keys = Object.keys(messages);
     const rand = keys[Math.floor(Math.random() * keys.length)];
     const loveMsgEl = document.getElementById("loveMessage");
+    if(loveMsgEl){
+      loveMsgEl.textContent = messages[rand];
+    }
+  }
+});
+
+db.ref('loveMessages2').on('value', snapshot => {
+  const messages = snapshot.val();
+  if(messages){
+    const keys = Object.keys(messages);
+    const rand = keys[Math.floor(Math.random() * keys.length)];
+    const loveMsgEl = document.getElementById("loveMessage2");
     if(loveMsgEl){
       loveMsgEl.textContent = messages[rand];
     }
@@ -157,21 +179,9 @@ function updateTime(){
 updateTime();
 setInterval(updateTime, 1000);
 
-//=================
-// Secret admin login trigger
-//=================
-const title = document.getElementById("siteTitle");
-let clickCount = 0;
-title.addEventListener("click", () => {
-  clickCount++;
-  if(clickCount >= 5){
-    if(localStorage.getItem("isAdmin") === "true"){
-      window.location.href = "admin-dashboard.html";  
-    } else {
-      window.location.href = "admin-login.html";
-    }
-  }
-});
+//==========
+//serviceworke
+//=============
 
 if ("serviceWorker" in navigator) {
   navigator.serviceWorker.register("/service-worker.js")
@@ -179,15 +189,34 @@ if ("serviceWorker" in navigator) {
     .catch(err => console.log("Service worker failed:", err));
 }
 
+//======
+//loader
+//========
 
 window.addEventListener("load", () => {
-  const loader = document.getElementById("loader");
-  if(loader){
+
+const loader = document.getElementById("loader");
+const start = Date.now();
+
+function hideLoader(){
+  const elapsed = Date.now() - start;
+  const minTime = 800; // 1.2 sec zichtbaar
+
+  const remaining = minTime - elapsed;
+
+  setTimeout(() => {
     loader.style.opacity = "0";
-    setTimeout(() => loader.remove(), 400);
-  }
+    setTimeout(() => loader.style.display = "none", 300);
+  }, remaining > 0 ? remaining : 0);
+}
+
+hideLoader();
+
 });
 
+//============
+// Truth or dare
+//=================
 
 const truths = [
 "What's your favourite memory with me?",
@@ -250,3 +279,34 @@ el.textContent = "Dare: " + data.text;
 }
 
 });
+
+
+
+
+// ===========
+// Dashboard
+// ===========
+function loginPartner() {
+firebase.auth().onAuthStateChanged((user) => {
+
+if (user) {
+
+
+db.ref('users/' + user.uid + '/role').once('value').then(snapshot => {
+
+const role = snapshot.val();
+
+if (role === 'home') {
+
+// al ingelogd → direct naar dashboard
+window.location.href = "partner-dashboard.html";
+
+}
+
+if (role === "admin") {
+  window.location.href = "admin-dashboard.html";
+}
+
+});
+
+}})}

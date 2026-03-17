@@ -45,16 +45,12 @@ function loginAdmin() {
     .then((userCredential) => {
       const user = userCredential.user;
 
-      // Email key aanpassen voor database (punt vervangen door komma)
-      const emailKey = user.email.replace(/\./g, ',');
-
       // Check rol in database
-      db.ref('users/' + emailKey + '/role').once('value').then(snapshot => {
+      db.ref('users/' + user.uid + '/role').once('value').then(snapshot => {
         const role = snapshot.val();
 
         if (role === 'admin') {
           // Admin gevonden → login succesvol
-          localStorage.setItem("isAdmin", "true");
           window.location.href = "admin-dashboard.html";
         } else {
           // Niet admin → uitloggen en alert
@@ -72,7 +68,6 @@ function loginAdmin() {
 // Logout functie
 function logoutAdmin() {
   firebase.auth().signOut().then(() => {
-    localStorage.removeItem("isAdmin");
     window.location.href = "admin-login.html";
   });
 }

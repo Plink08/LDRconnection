@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Her Space 💌</title>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <button class="logout-btn" onclick="logout()">Logout</button>
+    <button class="logout-btn" onclick="backHome()">Home</button>
+
+    <div id="loader">
+     <div class="heart"></div>
+     <p>Loading our little palace...</p>
+    </div>
+
+<header class="hero">
+<h1>💗 Your Space</h1>
+</header>
+
+<div class="container dashboard-container">
+
+<section class="card">
+<h3>Currently Status</h3>
+<input id="statusInput" placeholder="What are you doing">
+<p>Preview: <span id="statusPreview"></span></p>
+<button onclick="saveStatus()">Save Status</button>
+</section>
+
+<section class="card">
+<h3>Love Messages</h3>
+<textarea id="loveInput" placeholder="One message per line"></textarea>
+<p>Preview:</p>
+<ul id="lovePreview"></ul>
+<button onclick="saveLove()">Save Messages</button>
+</section>
+
+<section class="card">
+<h3>Photo Gallery</h3>
+<input id="photoInput" placeholder="Image URLs, comma separated">
+<p>Preview:</p>
+<div id="photoPreview" class="photo-gallery"></div>
+<button onclick="savePhotos()">Save Photos</button>
+</section>
+
+</div>
+
+<script src="partner.js"></script>
+
+</body>
+</html>

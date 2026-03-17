@@ -102,7 +102,6 @@ ul {
   margin: 0;
   padding: 0;
   overflow: hidden;
-  background-color: #333333;
 }
 
 ul li {
@@ -110,18 +109,11 @@ ul li {
 }
 
 ul li a {
-  display: block;
-  color: white;
-  text-align: center;
-  padding: 14px 16px;
   text-decoration: none;
 }
 
 ul li a:hover {
-  background-color: #111111;
-
-}ul li a.active {
-  background-color: #04AA6D;
+  background-color: #ff66aa;
 }
 
 .logout-btn {
@@ -154,6 +146,7 @@ ul li a:hover {
   z-index:9999;
   font-family:sans-serif;
   color:#e956a0;
+  transition: opacity 0.5s ease;
 }
 
 .heart{
@@ -272,4 +265,32 @@ text-align:center;
 .btn:hover {
   background-color: #ff4d99;
   transform: translateY(-2px);
+}
+
+
+/* heading */
+h2 {
+  color: #e956a0;
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+  font-size: 1.5rem;
+}
+
+/* input fields */
+ul li a, ul, textarea, input {  
+  width: 90%;
+  padding: 12px 15px;
+  margin: 10px 0;
+  border-radius: 12px;
+  border: 2px solid #f6b0d6;
+  background: #fff0f6;
+  font-size: 16px;
+  text-align: center;
+  transition: all 0.2s ease;
+}
+
+textarea, input:focus {
+  border-color: #e956a0;
+  box-shadow: 0 0 10px rgba(233, 86, 160, 0.3);
+  outline: none;
 }

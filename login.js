@@ -23,10 +23,9 @@ function loginHome() {
   firebase.auth().signInWithEmailAndPassword(email, password)
     .then((userCredential) => {
       const user = userCredential.user;
-      const emailKey = user.email.replace(/\./g, ',');
 
       // Check role in database
-      db.ref('users/' + emailKey + '/role').once('value').then(snapshot => {
+      db.ref('users/' + user.uid + '/role').once('value').then(snapshot => {
         const role = snapshot.val();
 
         if(role === 'home' || role === 'admin'){
