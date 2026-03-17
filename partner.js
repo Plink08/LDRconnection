@@ -13,29 +13,37 @@ const firebaseConfig = {
 };
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
 const db = firebase.database();
 
-// Admin dashboard guard
-firebase.auth().onAuthStateChanged(user => {
-  if(!user){
-    // Niet ingelogd → terug naar login
-    window.location.href = "account.html";
-    return;
-  }
 
+// =======================
+// GUARD (alleen home role)
+// =======================
 
-  // Check role in database
-  db.ref('users/' + user.uid + '/role').once('value').then(snapshot => {
-    const role = snapshot.val();
-    if(role !== 'admin'){
-      // Geen admin → terug naar home
-      alert("You are not authorized for the admin dashboard!");
-      window.location.href = "home.html";
-    }
-  });
+auth.onAuthStateChanged(user => {
+
+if(!user){
+window.location.href = "account.html";
+return;
+}
+
+db.ref("users/" + user.uid).once("value", snap => {
+
+const role = snap.val()?.role;
+
+if(role !== "home"){
+alert("You are not authorized for the admin dashboard!");
+window.location.href = "home.html";
+}
+
 });
 
+});
+
+//===========
 // Status
+//==========
 const statusInput = document.getElementById("statusInput");
 const statusPreview = document.getElementById("statusPreview");
 
@@ -46,25 +54,13 @@ statusInput.addEventListener("input", () => {
 function saveStatus(){
   const text = statusInput.value;
   const updatedAt = new Date().toISOString();
-  db.ref('status').set({ text, updatedAt });
+  db.ref('status2').set({ text, updatedAt });
   alert("Status saved to Firebase!");
 }
 
-// Countdown
-const dateInput = document.getElementById("dateInput");
-const datePreview = document.getElementById("datePreview");
-
-dateInput.addEventListener("input", () => {
-  datePreview.textContent = dateInput.value;
-});
-
-function saveDate(){
-  const nextDate = dateInput.value;
-  db.ref('nextDate').set(nextDate);
-  alert("Countdown saved to Firebase!");
-}
-
+//==============
 // Love messages
+//==============
 const loveInput = document.getElementById("loveInput");
 const lovePreview = document.getElementById("lovePreview");
 
@@ -86,11 +82,13 @@ function saveLove(){
   messages.forEach((msg, index) => {
     updates[`msg${index+1}`] = msg;
   });
-  db.ref('loveMessages').set(updates);
+  db.ref('loveMessages2').set(updates);
   alert("Love messages saved to Firebase!");
 }
 
+//===============
 // Photo gallery
+//===============
 const photoInput = document.getElementById("photoInput");
 const photoPreview = document.getElementById("photoPreview");
 
@@ -111,24 +109,24 @@ function savePhotos(){
   const urls = photoInput.value.split(",").map(u => u.trim());
   const updates = {};
   urls.forEach((url, i) => { updates[`photo${i+1}`] = url; });
-  db.ref('photos').set(updates);
+  db.ref('photos2').set(updates);
   alert("Photos saved to Firebase!");
 }
 
-// Logout
-function logout() {
-  localStorage.removeItem("isLoggedIn");
-  window.location.href = "index.html";
+
+// =======================
+// LOGOUT
+// =======================
+
+function logout(){
+auth.signOut().then(() => {
+window.location.href = "index.html";
+});
 }
 
-
-if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("/service-worker.js")
-    .then(reg => console.log("Service worker registered!", reg))
-    .catch(err => console.log("Service worker failed:", err));
-}
-
-//LOADER
+// ============
+// LOADER
+// ============
 
 window.addEventListener("load", () => {
 
@@ -150,3 +148,7 @@ function hideLoader(){
 hideLoader();
 
 });
+
+function backHome(){
+  window.location.href = "home.html"
+}

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Couple Space</title>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+
+<script src="account.js"></script>
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+<h1>Create your couple space</h1>
+
+<!-- STEP 1 ACCOUNT -->
+<div class="card" id="authCard">
+
+<h2>Create account</h2>
+
+<input id="email" type="email" placeholder="email">
+<input id="password" type="password" placeholder="password">
+
+<button onclick="register()">Create account</button>
+
+<hr>
+
+<h2>Login</h2>
+
+<input id="loginEmail" type="email" placeholder="email">
+<input id="loginPassword" type="password" placeholder="password">
+
+<button onclick="login()">Login</button>
+
+<p id="authError"></p>
+
+</div>
+
+<!-- STEP 2 CREATE COUPLE (later actief) -->
+<div class="card hidden" id="createCoupleCard">
+
+<h2>Create your couple home</h2>
+
+<p>This will create a private dashboard for you and your partner.</p>
+
+<button onclick="createCouple()">Create couple home</button>
+
+<p id="inviteLink"></p>
+
+</div>
+
+<!-- STEP 3 JOIN COUPLE (later actief) -->
+<div class="card hidden" id="joinCoupleCard">
+
+<h2>Join your partner</h2>
+
+<input id="inviteCode" placeholder="Invite code">
+
+<button onclick="joinCouple()">Join couple</button>
+
+</div>
+
+<script src="account.js"></script>
+
+</body>
+</html>

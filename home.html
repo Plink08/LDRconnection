@@ -5,9 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Renita's Palace</title>
     <link rel="stylesheet" href="styles.css" />
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
-    <link rel="apple-touch-icon" href="favicon.png">
+    <!-- Firebase App (core SDK) -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+
+    <!-- Firebase Auth -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+
+    <!-- Firebase Realtime Database -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>    <link rel="apple-touch-icon" href="favicon.png">
     <link rel="icon" type="image/png" href="favicon.png" />
     <link rel="manifest" href="manifest.json">
   </head>
@@ -19,25 +24,39 @@
     </div>
 
     <button class="logout-btn" onclick="logout()">Logout</button>
+    <button class="logout-btn" onclick="loginPartner()">Your dashboard</button>
+    <p id="loginError"></p>
 
     <header class="hero">
       <p id="loveMessageTime"></p>
       <h1>Renita's Palace</h1>
-      <h2 id="siteTitle">❤️</h2>
       <p class="subtitle">A small place for us two</p>
     </header>
 
     <main class="container">
       <section class="card">
-        <h2>Currently...</h2>
+        <h2>Lenn's currently...</h2>
         <p id="statusText">loading...</p>
         <small id="statusTime"></small>
       </section>
 
       <section class="card">
-        <h2>Random message</h2>
+        <h2>Renita's currently...</h2>
+        <p id="statusText2">loading...</p>
+        <small id="statusTime2"></small>
+      </section>
+
+
+      <section class="card">
+        <h2>Random message from Lenn</h2>
         <p id="loveMessage"></p>
         <small id="statusTime"></small>
+      </section>
+
+      <section class="card">
+        <h2>Random message from Renita</h2>
+        <p id="loveMessage2"></p>
+        <small id="statusTime2"></small>
       </section>
 
 
