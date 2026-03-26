@@ -93,6 +93,22 @@ db.ref('loveMessages2').on('value', snapshot => {
 });
 
 //=================
+// Facts
+// ================
+db.ref('randomFacts').on('value', snapshot => {
+  const facts = snapshot.val();
+  if(facts){
+    const factKeys = Object.keys(facts);
+    const randFactKey = factKeys[Math.floor(Math.random() * factKeys.length)];
+    const factEl = document.getElementById("randomFact");
+    if(factEl){
+      factEl.textContent = facts[randFactKey];
+    }
+  }
+});
+
+
+//=================
 // Photo gallery realtime
 //=================
 db.ref('photos').on('value', snapshot => {

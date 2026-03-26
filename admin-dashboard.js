@@ -43,6 +43,7 @@ statusInput.addEventListener("input", () => {
   statusPreview.textContent = statusInput.value;
 });
 
+
 function saveStatus(){
   const text = statusInput.value;
   const updatedAt = new Date().toISOString();
@@ -63,6 +64,33 @@ function saveDate(){
   db.ref('nextDate').set(nextDate);
   alert("Countdown saved to Firebase!");
 }
+
+// Random fact
+const factInput = document.getElementById("randomFact");
+const factPreview = document.getElementById("randomFactPreview"); 
+
+randomFActInput.addEventListener("input", () => {
+  randomFactPreview.innerHTML = "";
+  const lines = randomFactInput.value.split("\n");
+  lines.forEach(line => {
+    if(line.trim() !== ""){
+      const li = document.createElement("li");
+      li.textContent = line;
+      randomFactPreview.appendChild(li);
+    }
+  });
+});
+
+function saveRandomFact(){
+  const facts = randomFactInput.value.split("\n").filter(f => f.trim() !== "");
+  const updates = {};
+  facts.forEach((fact, index) => {
+    updates[`fact${index+1}`] = fact;
+  });
+  db.ref('randomFacts').set(updates);
+  alert("Random facts saved to Firebase!");
+}
+
 
 // Love messages
 const loveInput = document.getElementById("loveInput");
