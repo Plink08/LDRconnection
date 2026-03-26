@@ -69,7 +69,7 @@ function saveDate(){
 const factInput = document.getElementById("randomFact");
 const factPreview = document.getElementById("randomFactPreview"); 
 
-randomFActInput.addEventListener("input", () => {
+randomFactInput.addEventListener("input", () => {
   randomFactPreview.innerHTML = "";
   const lines = randomFactInput.value.split("\n");
   lines.forEach(line => {
